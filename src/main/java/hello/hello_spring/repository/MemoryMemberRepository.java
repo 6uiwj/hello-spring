@@ -2,10 +2,7 @@ package hello.hello_spring.repository;
 
 import hello.hello_spring.domain.Member;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class MemoryMemberRepository implements MemberRepository{
     //save메서드에 저장공간으로 쓸 것
@@ -13,7 +10,8 @@ public class MemoryMemberRepository implements MemberRepository{
     private static long sequence = 0L;
 
     /**
-     * 데이터 저장 메서드
+     * 데이터 저장 메서드, Map(store)에 저장
+     * id를 자동증감으로 저장해주고, 인자로 받은 member를 저장해준 id를 키로 해서 store에 저장
      * @param member
      * @return
      */
@@ -26,16 +24,26 @@ public class MemoryMemberRepository implements MemberRepository{
 
     @Override
     public Optional<Member> findById(Long id) {
-        return Optional.empty();
+        return Optional.ofNullable(store.get(id));//null일 때를 대비해 Optional로 감싸줌
     }
 
+    /**
+     * Store의 value의 name중에 인자값name과 같은 value를 찾아 반환
+     * @param name
+     * @return
+     */
     @Override
     public Optional<Member> findByName(String name) {
-        return Optional.empty();
+        return store.values().stream()
+                .filter(member -> member.getName().equals(name)).findAny();
     }
 
+    /**
+     * Store(map)의 value만 필요하므로 반환을 List로 해줌
+     * @return
+     */
     @Override
     public List<Member> findAll() {
-        return null;
+        return new ArrayList<>(store.values());
     }
 }
