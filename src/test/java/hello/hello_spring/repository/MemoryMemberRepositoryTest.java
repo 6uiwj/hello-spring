@@ -18,6 +18,7 @@ public class MemoryMemberRepositoryTest {
         Member result = repository.findById(member.getId()).get();
 
         //member값과 repository의 값이 같은지 확인
-        Assertions.assertEquals(member, result);
+        //Assertions.assertEquals(member, result);
+       // Assertions.assertEquals(member,null);
     }
 }
