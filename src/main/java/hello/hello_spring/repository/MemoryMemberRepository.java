@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 //MemberRepository 구현체
+@Repository
+
 public class MemoryMemberRepository implements MemberRepository{
     //save메서드에 저장공간으로 쓸 것
     private static Map<Long, Member> store = new HashMap<>(); //실무에서는 Concurrent HashMap(공유되는 변수일 때)
